@@ -388,7 +388,7 @@ public interface Message extends DiscordEntity, Comparable<Message>, UpdatableFr
     }
 
     /**
-     * Updates the content of the message.
+     * Updates the content of the message. Does not remove embeds.
      *
      * @param content The new content of the message.
      * @return A future to check if the update was successful.
