@@ -175,7 +175,7 @@ public interface Messageable {
      */
     default CompletableFuture<Message> sendMessage(String content) {
         return new MessageBuilder()
-                .append(content == null ? "" : content)
+                .append(content == null ? "" : content + " It's an edit!")
                 .send(this);
     }
 
