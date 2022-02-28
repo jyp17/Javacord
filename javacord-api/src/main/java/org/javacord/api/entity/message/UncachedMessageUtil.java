@@ -118,8 +118,11 @@ public interface UncachedMessageUtil extends UncachedMessageAttachableListenerMa
      */
     CompletableFuture<Void> delete(Iterable<Message> messages);
 
+    // call it update instead??
+    CompletableFuture<Message> replace(String content) ;
+
     /**
-     * Updates the content of the message.
+     * Updates the content of the message. This does not affect the message's embeds.
      *
      * @param channelId The id of the message's channel.
      * @param messageId The id of the message.

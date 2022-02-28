@@ -10,6 +10,7 @@ import org.javacord.api.entity.emoji.CustomEmoji;
 import org.javacord.api.entity.emoji.Emoji;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.UncachedMessageUtil;
+import org.javacord.api.entity.message.embed.Embed;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.user.User;
 import org.javacord.core.DiscordApiImpl;
@@ -155,6 +156,36 @@ public class UncachedMessageUtilImpl implements UncachedMessageUtil, InternalUnc
     @Override
     public CompletableFuture<Void> delete(Iterable<Message> messages) {
         return delete(StreamSupport.stream(messages.spliterator(), false).toArray(Message[]::new));
+    }
+
+    @Override
+    public CompletableFuture<Message> replace(String content) {
+        ObjectNode body = JsonNodeFactory.instance.objectNode();
+        if (content == null || content.isEmpty()) {
+            body.putNull("content");
+        } else {
+            body.put("content", content);
+        }
+
+        // Edit currently has boolean parameters updateEmbed and updateContent.
+        // Should we get rid of these arguments entirely since we're assuming updateContent and/or updateEmbed are false?
+        // Would I be able to call removeEmbed? removeEmbed currently uses an edit method. Do I have to change remove as well?
+        // Assuming we change edit so that it means "replace an entire message" and move current edit functionalities to
+        // another method (like editContent/Embed, or update), that means we will have to change all methods that currently call edit.
+        // What will the parameters of this method (replace an entire message) be? Should we only accept content OR embeds?
+        // Should we accept both? But if we accept both content and embeds, how is this different from the currently existing
+        // methods? If there's an editContent and editEmbed method, would there be an editContentAndEmbed method??
+
+        if (updateEmbed) {
+            ArrayNode embedArray = body.putArray("embeds");
+            embeds.stream().map(embedBuilder -> ((EmbedBuilderDelegateImpl) embedBuilder.getDelegate()).toJsonNode())
+                    .forEach(embedArray::add);
+        }
+        return new RestRequest<Message>(api, RestMethod.PATCH, RestEndpoint.MESSAGE)
+                .setUrlParameters(Long.toUnsignedString(channelId), Long.toUnsignedString(messageId))
+                .setBody(body)
+                .execute(result -> new MessageImpl(api, api.getTextChannelById(channelId).orElseThrow(() ->
+                        new IllegalStateException("TextChannel is missing.")), result.getJsonBody()));
     }
 
     @Override
