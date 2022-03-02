@@ -214,7 +214,7 @@ public interface Message extends DiscordEntity, Comparable<Message>, UpdatableFr
     }
 
     /**
-     * Updates the content of the message.
+     * Updates the content of the message. Does not remove embeds.
      *
      * @param api       The discord api instance.
      * @param channelId The id of the message's channel.
@@ -227,7 +227,7 @@ public interface Message extends DiscordEntity, Comparable<Message>, UpdatableFr
     }
 
     /**
-     * Updates the content of the message.
+     * Updates the content of the message. Does not remove embeds.
      *
      * @param api       The discord api instance.
      * @param channelId The id of the message's channel.
@@ -240,7 +240,7 @@ public interface Message extends DiscordEntity, Comparable<Message>, UpdatableFr
     }
 
     /**
-     * Updates the embed of the message.
+     * Updates the embed of the message. Does not remove content.
      *
      * @param api       The discord api instance.
      * @param channelId The id of the message's channel.
@@ -254,7 +254,7 @@ public interface Message extends DiscordEntity, Comparable<Message>, UpdatableFr
     }
 
     /**
-     * Updates the embed of the message.
+     * Updates the embed of the message. Does not remove content.
      *
      * @param api       The discord api instance.
      * @param channelId The id of the message's channel.
@@ -267,7 +267,7 @@ public interface Message extends DiscordEntity, Comparable<Message>, UpdatableFr
     }
 
     /**
-     * Updates the embed of the message.
+     * Updates the embed of the message. Does not remove content.
      *
      * @param api       The discord api instance.
      * @param channelId The id of the message's channel.
@@ -280,7 +280,7 @@ public interface Message extends DiscordEntity, Comparable<Message>, UpdatableFr
     }
 
     /**
-     * Updates the embed of the message.
+     * Updates the embed of the message. Does not remove content.
      *
      * @param api       The discord api instance.
      * @param channelId The id of the message's channel.
@@ -398,7 +398,7 @@ public interface Message extends DiscordEntity, Comparable<Message>, UpdatableFr
     }
 
     /**
-     * Updates the embed of the message.
+     * Updates the embed of the message. Does not remove content.
      *
      * @param embeds An array of the new embeds of the message.
      * @return A future to check if the update was successful.
@@ -408,7 +408,7 @@ public interface Message extends DiscordEntity, Comparable<Message>, UpdatableFr
     }
 
     /**
-     * Updates the embed of the message.
+     * Updates the embed of the message. Does not remove content.
      *
      * @param embeds An array of the new embeds of the message.
      * @return A future to check if the update was successful.
