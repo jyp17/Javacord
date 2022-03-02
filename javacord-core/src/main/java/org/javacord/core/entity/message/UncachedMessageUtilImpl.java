@@ -199,10 +199,20 @@ public class UncachedMessageUtilImpl implements UncachedMessageUtil, InternalUnc
             } else {
                 body.put("content", content);
             }
+        } else {
+            if (content != null || !content.isEmpty()) {
+                body.put("content", "");
+            }
         }
         if (updateEmbed) {
             ArrayNode embedArray = body.putArray("embeds");
             embeds.stream().map(embedBuilder -> ((EmbedBuilderDelegateImpl) embedBuilder.getDelegate()).toJsonNode())
+                    .forEach(embedArray::add);
+        } else {
+            ArrayNode embedArray = body.putArray("embeds");
+//            Collections.emptyList().stream().map(embedBuilder -> ((EmbedBuilderDelegateImpl) embedBuilder.getDelegate()).toJsonNode())
+//                    .forEach(embedArray::add);
+            Collections.emptyList().stream().map(embedBuilder -> ((EmbedBuilderDelegateImpl) embedBuilder).toJsonNode())
                     .forEach(embedArray::add);
         }
         return new RestRequest<Message>(api, RestMethod.PATCH, RestEndpoint.MESSAGE)
