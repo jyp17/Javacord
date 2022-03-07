@@ -200,9 +200,7 @@ public class UncachedMessageUtilImpl implements UncachedMessageUtil, InternalUnc
                 body.put("content", content);
             }
         } else {
-            if (content != null || !content.isEmpty()) {
-                body.put("content", "");
-            }
+            body.putNull("content");
         }
         if (updateEmbed) {
             ArrayNode embedArray = body.putArray("embeds");
